@@ -1,0 +1,62 @@
+{
+  "entities": {
+    "JournalEntry": {
+      "title": "JournalEntry",
+      "description": "A user-authored journal reflection with multi-turn Gemini AI interaction history and summaries.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the journal entry"
+        },
+        "userId": {
+          "type": "string",
+          "description": "The UID of the authenticated user who owns this journal entry"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title or headline of the reflection"
+        },
+        "content": {
+          "type": "string",
+          "description": "The initial or primary reflection text written by the user"
+        },
+        "turns": {
+          "type": "array",
+          "description": "Multi-turn conversation history between the user and Gemini"
+        },
+        "summary": {
+          "type": "string",
+          "description": "AI-generated summary or core themes of the reflection"
+        },
+        "tags": {
+          "type": "array",
+          "description": "User or AI categorized tags for reflection"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp when the entry was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp when the entry was last updated"
+        }
+      },
+      "required": ["id", "userId", "title", "content", "turns", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/entries/{entryId}": {
+      "schema": {
+        "$ref": "#/entities/JournalEntry"
+      },
+      "description": "Stores private journal reflections and multi-turn Gemini interactions isolated strictly to the authenticated user."
+    },
+    "/users/{userId}/interactions/{interactionId}": {
+      "schema": {
+        "$ref": "#/entities/JournalEntry"
+      },
+      "description": "Stores isolated interaction logs strictly bound to the authenticated user."
+    }
+  }
+}
